@@ -1,0 +1,7 @@
+.app {
+    background-color: rgba(243, 243, 243, 1);
+    max-width: 1360px;
+    height: 100vh;
+    padding: 32px 40px 24px;
+    margin: 0 auto;
+}
