@@ -2,7 +2,7 @@ import logo from "../../assets/wtwr-logo.svg";
 import avatarImage from "../../assets/avatar.jpg";
 import "./Header.css";
 
-function Header() {
+function Header({ handleOpenAddClothesModal }) {
   const now = new Date();
   const dateString = now.toLocaleDateString("default", {
     month: "long",
@@ -18,7 +18,7 @@ function Header() {
         </time>
         , Austin
       </p>
-      <button className="header__add-clothes-btn">+ Add clothes</button>
+      <button onClick={handleOpenAddClothesModal} className="header__add-clothes-btn">+ Add clothes</button>
       <p className="header__username">Jason Dijols</p>
       <img
         src={avatarImage}

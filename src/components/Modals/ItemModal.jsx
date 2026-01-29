@@ -1,11 +1,6 @@
-import "./ItemModal.css";
+import "./Modal.css";
 
-function ItemModal({ card, isOpen, onClose }) {
-  const handleOverlayClick = (evt) => {
-    if (evt.target === evt.currentTarget) {
-      onClose();
-    }
-  };
+function ItemModal({ card, isOpen, onClose, handleOverlayClick }) {
 
   return (
     <div
@@ -21,7 +16,7 @@ function ItemModal({ card, isOpen, onClose }) {
         <img src={card.link} alt={card.name} className="modal__image" />
         <div className="modal__footer">
           <h2 className="modal__text">{card.name}</h2>
-          <p className="modal__text">{card.weather}</p>
+          <p className="modal__text">Weather: {card.weather}</p>
         </div>
       </div>
     </div>

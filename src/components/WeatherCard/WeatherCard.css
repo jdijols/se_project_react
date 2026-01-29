@@ -1,8 +1,9 @@
 .weather-card {
     height: 80px;
     position: relative;
-    overflow: hidden;
+    line-height: 1.1;
     border-radius: 12px;
+    overflow: hidden;
     margin: 0 0 32px;
 }
 .weather-card__image {
@@ -17,6 +18,5 @@
     bottom: 20px;
     left: 16px;
     font-size: 36px;
-    line-height: 1.1;
     margin: 0;
 }
