@@ -1,10 +1,14 @@
 .header {
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  justify-content: space-between;
   font-size: 20px;
   line-height: 1.2;
   margin: 0 0 32px;
+}
+.header__section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 .header__logo {
   margin: 0 24px 0 0;
@@ -16,9 +20,10 @@
 }
 .header__add-clothes-btn {
   background-color: transparent;
-  border: none;
-  margin-left: auto;
   font-weight: 700;
+  padding: 0;
+  border: none;
+  margin: 0 0 0 20px;
 }
 .header__username {
   margin: 0 0 0 20px;
