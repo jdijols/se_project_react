@@ -4,7 +4,7 @@ import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import ItemModal from "../Modals/ItemModal";
-import FormModal from "../Modals/FormModal";
+import ModalWithForm from "../Modals/ModalWithForm";
 
 import { defaultClothingItems } from "../../utils/defaultClothingItems";
 import "./App.css";
@@ -86,7 +86,7 @@ function App() {
             onClose={handleCloseModal}
             handleOverlayClick={handleOverlayClick}
           />
-          <FormModal
+          <ModalWithForm
             isOpen={activeModal === "add-clothes-modal"}
             title="New clothing item"
             buttonText="Add item"
@@ -134,7 +134,7 @@ function App() {
                 <label htmlFor="cold">Cold</label>
               </div>
             </fieldset>
-          </FormModal>
+          </ModalWithForm>
         </div>
       </div>
     </CurrentTempUnitContext.Provider>

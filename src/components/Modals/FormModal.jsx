@@ -1,6 +1,6 @@
 import "./Modal.css";
 
-function FormModal({
+function ModalWithForm({
   isOpen,
   children,
   handleSubmit,
@@ -33,4 +33,4 @@ function FormModal({
   );
 }
 
-export default FormModal;
+export default ModalWithForm;
