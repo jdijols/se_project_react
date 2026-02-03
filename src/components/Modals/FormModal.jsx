@@ -8,12 +8,11 @@ function FormModal({
   buttonText,
   name,
   onClose,
-  handleOverlayClick
+  handleOverlayClick,
 }) {
-
   return (
     <div
-      className={`modal${isOpen ? " modal_is-opened" : ""}`}
+      className={`modal modal_type_${name}${isOpen ? " modal_is-opened" : ""}`}
       onClick={handleOverlayClick}
     >
       <div className="modal__container modal__container_type_form">
@@ -25,10 +24,10 @@ function FormModal({
         ></button>
         <form onSubmit={handleSubmit} name={name} className="modal__form">
           {children}
+          <button type="submit" className="modal__submit-btn">
+            {buttonText}
+          </button>
         </form>
-        <button type="submit" className="modal__submit-btn">
-          {buttonText}
-        </button>
       </div>
     </div>
   );
