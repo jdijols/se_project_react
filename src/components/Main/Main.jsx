@@ -19,7 +19,7 @@ function Main({ clothingItems, handleOpenItemModal, weatherData }) {
   const weatherType = getWeatherType(weatherData.temp.F);
 
   const filteredItems = clothingItems.filter(
-    (item) => item.weather.toLowerCase() === weatherType
+    (item) => item.weather.toLowerCase() === weatherType,
   );
 
   return (

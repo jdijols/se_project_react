@@ -11,8 +11,9 @@
   align-items: center;
   opacity: 0;
   transition:
-    visibility 0s linear 0.1s,
-    opacity 0.1s linear;
+    visibility 0s linear 0.2s,
+    opacity 0.2s linear;
+  z-index: 3;
 }
 .modal_is-opened {
   visibility: visible;
@@ -45,7 +46,6 @@
   opacity: 1;
   padding: 0;
   border: none;
-  transition: opacity 0.1s ease;
   cursor: pointer;
 }
 .modal__close-btn:hover {
@@ -77,14 +77,13 @@
   border: none;
   margin: 24px 0 0;
 }
-.modal__label {
-}
 .modal__input {
   all: unset;
   width: 100%;
   padding: 4px 0;
   border-bottom: 1px solid rgba(0, 0, 0, 1);
   margin: 4px 0 0;
+  cursor: text;
 }
 .modal__input::placeholder {
   color: rgba(0, 0, 0, 0.5);
@@ -138,10 +137,42 @@
   border: none;
   border-radius: 4px;
   margin: 32px 0 0;
+  cursor: pointer;
 }
 .modal__submit-btn:hover {
   background-color: rgba(0, 0, 0, 0.6);
 }
 .modal__submit-btn_type_disabled {
   background-color: rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 630px) {
+  .modal_type_add-clothes-form {
+    opacity: 1;
+    background-color: transparent;
+    transition:
+      visibility 0s 0.3s,
+      background-color 0.3s ease-out;
+  }
+  .modal_type_add-clothes-form.modal_is-opened {
+    background-color: rgba(0, 0, 0, 0.5);
+    transition:
+      visibility 0s,
+      background-color 0.3s ease-out;
+  }
+  .modal__container_type_form {
+    align-self: flex-end;
+    max-width: 100%;
+    margin: 0;
+    border-radius: 16px 16px 0 0;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-out;
+  }
+  .modal_is-opened .modal__container_type_form {
+    transform: translateY(0);
+  }
+  .modal__submit-btn {
+    width: 100%;
+    height: 44px;
+  }
 }

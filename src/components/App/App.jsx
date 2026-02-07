@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -22,6 +23,7 @@ function App() {
     isDay: true,
   });
 
+  const headerRef = useRef(null);
   const [currentTempUnit, setCurrentTempUnit] = useState("F");
 
   function handleTempUnitChange() {
@@ -33,6 +35,7 @@ function App() {
   }
 
   function handleOpenItemModal(card) {
+    headerRef.current?.closeMenu();
     setActiveModal("item-modal");
     setSelectedCard(card);
   }
@@ -43,7 +46,7 @@ function App() {
 
   function handleCloseModal() {
     setActiveModal("");
-    setSelectedCard({});
+    setTimeout(() => setSelectedCard({}), 300);
   }
 
   const handleOverlayClick = (evt) => {
@@ -71,14 +74,24 @@ function App() {
       <div className="app">
         <div className="app__content">
           <Header
+            ref={headerRef}
             weatherData={weatherData}
             handleOpenAddClothesModal={handleOpenAddClothesModal}
           />
-          <Main
-            weatherData={weatherData}
-            clothingItems={clothingItems}
-            handleOpenItemModal={handleOpenItemModal}
-          />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Main
+                  weatherData={weatherData}
+                  clothingItems={clothingItems}
+                  handleOpenItemModal={handleOpenItemModal}
+                />
+              }
+            ></Route>
+            <Route path="/profile" element={<div>Profile</div>} />
+          </Routes>
+
           <Footer />
           <ItemModal
             card={selectedCard}
