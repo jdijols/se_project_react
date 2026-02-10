@@ -3,9 +3,10 @@ import { useEffect, useRef, useState } from "react";
 
 import Header from "../Header/Header";
 import Main from "../Main/Main";
+import Profile from "../Profile/Profile";
 import Footer from "../Footer/Footer";
 import ItemModal from "../Modals/ItemModal";
-import ModalWithForm from "../Modals/ModalWithForm";
+import AddItemModal from "../Modals/AddItemModal";
 
 import { defaultClothingItems } from "../../utils/defaultClothingItems";
 import "./App.css";
@@ -55,6 +56,13 @@ function App() {
     }
   };
 
+  function handleAddItemSubmit(inputValues, resetForm) {
+    const newItem = { _id: Date.now(), ...inputValues };
+    setClothingItems([newItem, ...clothingItems]);
+    handleCloseModal();
+    resetForm();
+  }
+
   useEffect(() => {
     getWeatherData()
       .then((data) => {
@@ -89,7 +97,16 @@ function App() {
                 />
               }
             ></Route>
-            <Route path="/profile" element={<div>Profile</div>} />
+            <Route
+              path="/profile"
+              element={
+                <Profile
+                  clothingItems={clothingItems}
+                  handleOpenItemModal={handleOpenItemModal}
+                  handleOpenAddClothesModal={handleOpenAddClothesModal}
+                />
+              }
+            />
           </Routes>
 
           <Footer />
@@ -99,55 +116,12 @@ function App() {
             onClose={handleCloseModal}
             handleOverlayClick={handleOverlayClick}
           />
-          <ModalWithForm
+          <AddItemModal
             isOpen={activeModal === "add-clothes-modal"}
-            title="New clothing item"
-            buttonText="Add item"
-            name="add-clothes-form"
-            onClose={handleCloseModal}
+            handleCloseModal={handleCloseModal}
             handleOverlayClick={handleOverlayClick}
-          >
-            <fieldset className="modal__fieldset">
-              <label htmlFor="add-item-name-input" className="modal__label">
-                Name
-                <input
-                  id="add-item-name-input"
-                  type="text"
-                  placeholder="Name"
-                  className="modal__input"
-                />
-              </label>
-              <label htmlFor="add-item-image-input" className="modal__label">
-                Image
-                <input
-                  id="add-item-image-input"
-                  type="url"
-                  placeholder="Image URL"
-                  className="modal__input"
-                />
-              </label>
-            </fieldset>
-            <fieldset className="modal__fieldset_type_radio-btns">
-              <legend className="modal__legend">
-                Select the weather type:
-              </legend>
-
-              <div className="modal__radio-btn">
-                <input type="radio" id="hot" name="weather" value="hot" />
-                <label htmlFor="hot">Hot</label>
-              </div>
-
-              <div className="modal__radio-btn">
-                <input type="radio" id="warm" name="weather" value="warm" />
-                <label htmlFor="warm">Warm</label>
-              </div>
-
-              <div className="modal__radio-btn">
-                <input type="radio" id="cold" name="weather" value="cold" />
-                <label htmlFor="cold">Cold</label>
-              </div>
-            </fieldset>
-          </ModalWithForm>
+            handleAddItemSubmit={handleAddItemSubmit}
+          />
         </div>
       </div>
     </CurrentTempUnitContext.Provider>

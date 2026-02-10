@@ -1,4 +1,5 @@
-import { useState, useEffect, forwardRef, useImperativeHandle } from "react";
+import { useState, useEffect, useRef, forwardRef, useImperativeHandle } from "react";
+import { Link } from "react-router-dom";
 
 import logo from "../../assets/wtwr-logo.svg";
 import avatarImage from "../../assets/avatar.jpg";
@@ -8,10 +9,11 @@ import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 
 const Header = forwardRef(function Header(
   { handleOpenAddClothesModal, weatherData },
-  ref
+  ref,
 ) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const menuContainerRef = useRef(null);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 630px)");
@@ -26,6 +28,22 @@ const Header = forwardRef(function Header(
     mediaQuery.addEventListener("change", handleChange);
     return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
+
+  useEffect(() => {
+    if (!isMenuOpen) return;
+
+    const handleClickOutside = (e) => {
+      if (
+        menuContainerRef.current &&
+        !menuContainerRef.current.contains(e.target)
+      ) {
+        closeMenu();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isMenuOpen]);
 
   const now = new Date();
   const dateString = now.toLocaleDateString("default", {
@@ -49,7 +67,9 @@ const Header = forwardRef(function Header(
   return (
     <header className="header">
       <div className="header__section header__section_left">
-        <img src={logo} alt="WTWR Logo" className="header__logo" />
+        <Link to="/" onClick={closeMenu}>
+          <img src={logo} alt="WTWR Logo" className="header__logo" />
+        </Link>
         <p className="header__date-location">
           <time dateTime={now} className="header__date">
             {dateString}
@@ -57,7 +77,7 @@ const Header = forwardRef(function Header(
           , {weatherData.city}
         </p>
       </div>
-      <div className="header__section header__section_right">
+      <div ref={menuContainerRef} className="header__section header__section_right">
         <button
           type="button"
           className={`header__menu-btn${isMenuOpen ? " header__menu-btn_active" : ""}`}
@@ -77,14 +97,16 @@ const Header = forwardRef(function Header(
           >
             + Add clothes
           </button>
-          <div className="header__user">
-            <p className="header__username">Jason Dijols</p>
-            <img
-              src={avatarImage}
-              alt="Jason Dijols' Avatar"
-              className="header__avatar"
-            />
-          </div>
+          <Link to="/profile" className="header__profile-link" onClick={closeMenu}>
+            <div className="header__user">
+              <p className="header__username">Jason Dijols</p>
+              <img
+                src={avatarImage}
+                alt="Jason Dijols' Avatar"
+                className="header__avatar"
+              />
+            </div>
+          </Link>
         </div>
       </div>
     </header>
