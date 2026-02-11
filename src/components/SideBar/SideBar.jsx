@@ -13,6 +13,10 @@ function SideBar() {
           className="sidebar__avatar header__avatar"
         />
       </div>
+      <button className="sidebar__btn">Change profile data</button>
+      <button className="sidebar__btn" type="button">
+        Log out
+      </button>
     </aside>
   );
 }

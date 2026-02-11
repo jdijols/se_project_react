@@ -1,24 +1,19 @@
 import { useForm } from "../../hooks/useForm";
 import ModalWithForm from "./ModalWithForm";
 
-function AddItemModal({
-  isOpen,
-  handleCloseModal,
-  handleOverlayClick,
-  handleAddItemSubmit,
-}) {
+function AddItemModal({ isOpen, onClose, onOverlayClick, onAddItemSubmit }) {
   const { values, handleChange, handleReset } = useForm({
     name: "",
-    link: "",
-    weather: "hot",
+    imageUrl: "",
+    weather: "Hot",
   });
 
   const isFormValid =
-    values.name.trim().length >= 2 && values.link.trim() !== "";
+    values.name.trim().length >= 2 && values.imageUrl.trim() !== "";
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    handleAddItemSubmit(values, handleReset);
+    onAddItemSubmit(values, handleReset);
   }
 
   return (
@@ -27,10 +22,10 @@ function AddItemModal({
       title="New clothing item"
       buttonText="Add item"
       name="add-clothes-form"
-      onClose={handleCloseModal}
-      handleOverlayClick={handleOverlayClick}
+      onClose={onClose}
+      onOverlayClick={onOverlayClick}
       isFormValid={isFormValid}
-      handleSubmit={handleSubmit}
+      onSubmit={handleSubmit}
     >
       <fieldset className="modal__fieldset">
         <label htmlFor="add-item-name-input" className="modal__label">
@@ -55,8 +50,8 @@ function AddItemModal({
             type="url"
             placeholder="Image URL"
             className="modal__input"
-            name="link"
-            value={values.link}
+            name="imageUrl"
+            value={values.imageUrl}
             onChange={handleChange}
             required
           />
@@ -68,37 +63,37 @@ function AddItemModal({
         <div className="modal__radio-btn">
           <input
             type="radio"
-            id="hot"
+            id="Hot"
             name="weather"
-            value="hot"
-            checked={values.weather === "hot"}
+            value="Hot"
+            checked={values.weather === "Hot"}
             onChange={handleChange}
           />
-          <label htmlFor="hot">Hot</label>
+          <label htmlFor="Hot">Hot</label>
         </div>
 
         <div className="modal__radio-btn">
           <input
             type="radio"
-            id="warm"
+            id="Warm"
             name="weather"
-            value="warm"
-            checked={values.weather === "warm"}
+            value="Warm"
+            checked={values.weather === "Warm"}
             onChange={handleChange}
           />
-          <label htmlFor="warm">Warm</label>
+          <label htmlFor="Warm">Warm</label>
         </div>
 
         <div className="modal__radio-btn">
           <input
             type="radio"
-            id="cold"
+            id="Cold"
             name="weather"
-            value="cold"
-            checked={values.weather === "cold"}
+            value="Cold"
+            checked={values.weather === "Cold"}
             onChange={handleChange}
           />
-          <label htmlFor="cold">Cold</label>
+          <label htmlFor="Cold">Cold</label>
         </div>
       </fieldset>
     </ModalWithForm>

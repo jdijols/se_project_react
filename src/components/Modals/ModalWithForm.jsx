@@ -3,18 +3,18 @@ import "./Modal.css";
 function ModalWithForm({
   isOpen,
   children,
-  handleSubmit,
+  onSubmit,
   title,
   buttonText,
   name,
   onClose,
-  handleOverlayClick,
+  onOverlayClick,
   isFormValid,
 }) {
   return (
     <div
       className={`modal modal_type_${name}${isOpen ? " modal_is-opened" : ""}`}
-      onClick={handleOverlayClick}
+      onClick={onOverlayClick}
     >
       <div className="modal__container modal__container_type_form">
         <h2 className="modal__title">{title}</h2>
@@ -23,7 +23,7 @@ function ModalWithForm({
           className="modal__close-btn"
           onClick={onClose}
         ></button>
-        <form onSubmit={handleSubmit} name={name} className="modal__form">
+        <form onSubmit={onSubmit} name={name} className="modal__form">
           {children}
           <button
             type="submit"

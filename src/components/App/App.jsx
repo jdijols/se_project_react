@@ -7,10 +7,15 @@ import Profile from "../Profile/Profile";
 import Footer from "../Footer/Footer";
 import ItemModal from "../Modals/ItemModal";
 import AddItemModal from "../Modals/AddItemModal";
+import ConfirmDeleteModal from "../Modals/ConfirmDeleteModal";
 
-import { defaultClothingItems } from "../../utils/defaultClothingItems";
 import "./App.css";
 import { getWeatherData } from "../../utils/weatherApi";
+import {
+  getClothingItems,
+  addClothingItem,
+  deleteClothingItem,
+} from "../../utils/api";
 import CurrentTempUnitContext from "../../contexts/CurrentTempUnitContext";
 
 function App() {
@@ -56,11 +61,29 @@ function App() {
     }
   };
 
+  function handleOpenConfirmationModal() {
+    setActiveModal("confirm-delete-modal");
+  }
+
+  function handleDeleteItem() {
+    deleteClothingItem(selectedCard._id)
+      .then(() => {
+        setClothingItems(
+          clothingItems.filter((item) => item._id !== selectedCard._id),
+        );
+        handleCloseModal();
+      })
+      .catch(console.error);
+  }
+
   function handleAddItemSubmit(inputValues, resetForm) {
-    const newItem = { _id: Date.now(), ...inputValues };
-    setClothingItems([newItem, ...clothingItems]);
-    handleCloseModal();
-    resetForm();
+    addClothingItem(inputValues)
+      .then((newItem) => {
+        setClothingItems([newItem, ...clothingItems]);
+        handleCloseModal();
+        resetForm();
+      })
+      .catch(console.error);
   }
 
   useEffect(() => {
@@ -72,7 +95,11 @@ function App() {
   }, []);
 
   useEffect(() => {
-    setClothingItems(defaultClothingItems);
+    getClothingItems()
+      .then((data) => {
+        setClothingItems(data.reverse());
+      })
+      .catch(console.error);
   }, []);
 
   return (
@@ -84,7 +111,7 @@ function App() {
           <Header
             ref={headerRef}
             weatherData={weatherData}
-            handleOpenAddClothesModal={handleOpenAddClothesModal}
+            onAddClothes={handleOpenAddClothesModal}
           />
           <Routes>
             <Route
@@ -93,7 +120,7 @@ function App() {
                 <Main
                   weatherData={weatherData}
                   clothingItems={clothingItems}
-                  handleOpenItemModal={handleOpenItemModal}
+                  onCardClick={handleOpenItemModal}
                 />
               }
             ></Route>
@@ -102,8 +129,8 @@ function App() {
               element={
                 <Profile
                   clothingItems={clothingItems}
-                  handleOpenItemModal={handleOpenItemModal}
-                  handleOpenAddClothesModal={handleOpenAddClothesModal}
+                  onCardClick={handleOpenItemModal}
+                  onAddClothes={handleOpenAddClothesModal}
                 />
               }
             />
@@ -114,13 +141,20 @@ function App() {
             card={selectedCard}
             isOpen={activeModal === "item-modal"}
             onClose={handleCloseModal}
-            handleOverlayClick={handleOverlayClick}
+            onDeleteClick={handleOpenConfirmationModal}
+            onOverlayClick={handleOverlayClick}
+          />
+          <ConfirmDeleteModal
+            isOpen={activeModal === "confirm-delete-modal"}
+            onClose={handleCloseModal}
+            onConfirm={handleDeleteItem}
+            onOverlayClick={handleOverlayClick}
           />
           <AddItemModal
             isOpen={activeModal === "add-clothes-modal"}
-            handleCloseModal={handleCloseModal}
-            handleOverlayClick={handleOverlayClick}
-            handleAddItemSubmit={handleAddItemSubmit}
+            onClose={handleCloseModal}
+            onOverlayClick={handleOverlayClick}
+            onAddItemSubmit={handleAddItemSubmit}
           />
         </div>
       </div>

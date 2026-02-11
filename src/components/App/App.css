@@ -11,6 +11,10 @@
   font-size: 16px;
   line-height: 1.25;
 }
+:where(.app) button,
+:where(.app) input {
+  font-weight: inherit;
+}
 .app__content {
   display: flex;
   flex-direction: column;

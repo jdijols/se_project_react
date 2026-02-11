@@ -4,7 +4,7 @@ import CurrentTempUnitContext from "../../contexts/CurrentTempUnitContext";
 import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
 
-function Main({ clothingItems, handleOpenItemModal, weatherData }) {
+function Main({ clothingItems, onCardClick, weatherData }) {
   const { currentTempUnit } = useContext(CurrentTempUnitContext);
 
   const temp =
@@ -33,7 +33,7 @@ function Main({ clothingItems, handleOpenItemModal, weatherData }) {
           <ItemCard
             key={item._id}
             data={item}
-            onCardClick={handleOpenItemModal}
+            onCardClick={onCardClick}
           />
         ))}
       </ul>

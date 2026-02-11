@@ -17,7 +17,6 @@
 }
 .header__add-clothes-btn {
   background-color: transparent;
-  font-weight: 700;
   padding: 0;
   border: none;
   margin: 0 0 0 20px;
@@ -74,6 +73,9 @@
   .header__section_left {
     font-size: 16px;
     line-height: 1.2;
+  }
+  .header__logo {
+    margin: 0 12px 0 0;
   }
   .header__section_right > .header__menu-btn {
     display: block;

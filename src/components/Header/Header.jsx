@@ -8,7 +8,7 @@ import "./Header.css";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 
 const Header = forwardRef(function Header(
-  { handleOpenAddClothesModal, weatherData },
+  { onAddClothes, weatherData },
   ref,
 ) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -91,7 +91,7 @@ const Header = forwardRef(function Header(
           <button
             onClick={() => {
               closeMenu();
-              handleOpenAddClothesModal();
+              onAddClothes();
             }}
             className="header__add-clothes-btn"
           >
