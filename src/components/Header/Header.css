@@ -40,6 +40,33 @@
   border-radius: 50%;
   margin: 0 0 0 12px;
 }
+.header__avatar_placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 0 12px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+}
+.header__auth-btn {
+  background-color: transparent;
+  padding: 0;
+  border: none;
+  margin: 0 0 0 20px;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1.2;
+}
+.header__auth-btn:hover {
+  opacity: 0.6;
+}
 .header__menu-btn {
   display: none;
   border-radius: 10px;
@@ -168,6 +195,9 @@
   }
   .header__username {
     display: block;
+    margin: 0;
+  }
+  .header__auth-btn {
     margin: 0;
   }
 }

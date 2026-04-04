@@ -20,6 +20,20 @@
   line-height: 1.25;
   margin: 0;
 }
+.sidebar__avatar_placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  box-sizing: border-box;
+}
 .sidebar__btn {
   font-size: 20px;
   line-height: 1.25;
@@ -30,7 +44,10 @@
   width: fit-content;
   border: none;
   margin: 0 0 8px 72px;
-  cursor: not-allowed;
+  cursor: pointer;
+}
+.sidebar__btn:hover {
+  color: rgba(0, 0, 0, 1);
 }
 
 @media (max-width: 1024px) {

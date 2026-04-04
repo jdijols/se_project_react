@@ -1,19 +1,33 @@
-import { useState, useEffect, useRef, forwardRef, useImperativeHandle } from "react";
+import {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  useContext,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import { Link } from "react-router-dom";
 
 import logo from "../../assets/wtwr-logo.svg";
-import avatarImage from "../../assets/avatar.jpg";
 import "./Header.css";
 
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 const Header = forwardRef(function Header(
-  { onAddClothes, weatherData },
+  { onAddClothes, weatherData, isLoggedIn, onOpenRegister, onOpenLogin },
   ref,
 ) {
+  const currentUser = useContext(CurrentUserContext);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
   const menuContainerRef = useRef(null);
+
+  const closeMenu = useCallback(() => {
+    setIsMenuOpen(false);
+  }, []);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 630px)");
@@ -43,7 +57,9 @@ const Header = forwardRef(function Header(
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isMenuOpen]);
+  }, [isMenuOpen, closeMenu]);
+
+  useImperativeHandle(ref, () => ({ closeMenu }), [closeMenu]);
 
   const now = new Date();
   const dateString = now.toLocaleDateString("default", {
@@ -56,13 +72,7 @@ const Header = forwardRef(function Header(
     setIsMenuOpen((prev) => !prev);
   };
 
-  const closeMenu = () => {
-    if (isMenuOpen) {
-      setIsMenuOpen(false);
-    }
-  };
-
-  useImperativeHandle(ref, () => ({ closeMenu }), [isMenuOpen]);
+  const avatarInitial = currentUser?.name?.charAt(0)?.toUpperCase();
 
   return (
     <header className="header">
@@ -77,7 +87,10 @@ const Header = forwardRef(function Header(
           , {weatherData.city}
         </p>
       </div>
-      <div ref={menuContainerRef} className="header__section header__section_right">
+      <div
+        ref={menuContainerRef}
+        className="header__section header__section_right"
+      >
         <button
           type="button"
           className={`header__menu-btn${isMenuOpen ? " header__menu-btn_active" : ""}`}
@@ -88,25 +101,62 @@ const Header = forwardRef(function Header(
           className={`header__menu${hasInteracted ? " header__menu_animated" : ""}${isMenuOpen ? " header__menu_open" : ""}`}
         >
           <ToggleSwitch onToggle={closeMenu} />
-          <button
-            onClick={() => {
-              closeMenu();
-              onAddClothes();
-            }}
-            className="header__add-clothes-btn"
-          >
-            + Add clothes
-          </button>
-          <Link to="/profile" className="header__profile-link" onClick={closeMenu}>
-            <div className="header__user">
-              <p className="header__username">Jason Dijols</p>
-              <img
-                src={avatarImage}
-                alt="Jason Dijols' Avatar"
-                className="header__avatar"
-              />
-            </div>
-          </Link>
+          {isLoggedIn ? (
+            <>
+              <button
+                onClick={() => {
+                  closeMenu();
+                  onAddClothes();
+                }}
+                className="header__add-clothes-btn"
+              >
+                + Add clothes
+              </button>
+              <Link
+                to="/profile"
+                className="header__profile-link"
+                onClick={closeMenu}
+              >
+                <div className="header__user">
+                  <p className="header__username">{currentUser?.name}</p>
+                  {currentUser?.avatar ? (
+                    <img
+                      src={currentUser.avatar}
+                      alt={`${currentUser.name}'s Avatar`}
+                      className="header__avatar"
+                    />
+                  ) : (
+                    <span className="header__avatar_placeholder">
+                      {avatarInitial}
+                    </span>
+                  )}
+                </div>
+              </Link>
+            </>
+          ) : (
+            <>
+              <button
+                type="button"
+                className="header__auth-btn"
+                onClick={() => {
+                  closeMenu();
+                  onOpenRegister();
+                }}
+              >
+                Sign Up
+              </button>
+              <button
+                type="button"
+                className="header__auth-btn"
+                onClick={() => {
+                  closeMenu();
+                  onOpenLogin();
+                }}
+              >
+                Log In
+              </button>
+            </>
+          )}
         </div>
       </div>
     </header>

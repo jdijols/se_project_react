@@ -1,27 +1,55 @@
-const baseUrl = "http://localhost:3001";
+const BASE_URL = "http://localhost:3000";
 
 function handleResponse(res) {
   return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
 }
 
 function getClothingItems() {
-  return fetch(`${baseUrl}/items`).then(handleResponse);
+  return fetch(`${BASE_URL}/items`).then(handleResponse);
 }
 
-function addClothingItem({ name, imageUrl, weather }) {
-  return fetch(`${baseUrl}/items`, {
+function addClothingItem({ name, imageUrl, weather }, token) {
+  return fetch(`${BASE_URL}/items`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ name, imageUrl, weather }),
   }).then(handleResponse);
 }
 
-function deleteClothingItem(id) {
-  return fetch(`${baseUrl}/items/${id}`, {
+function deleteClothingItem(id, token) {
+  return fetch(`${BASE_URL}/items/${id}`, {
     method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   }).then(handleResponse);
 }
 
-export { getClothingItems, addClothingItem, deleteClothingItem };
+function addCardLike(id, token) {
+  return fetch(`${BASE_URL}/items/${id}/likes`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(handleResponse);
+}
+
+function removeCardLike(id, token) {
+  return fetch(`${BASE_URL}/items/${id}/likes`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(handleResponse);
+}
+
+export {
+  getClothingItems,
+  addClothingItem,
+  deleteClothingItem,
+  addCardLike,
+  removeCardLike,
+};

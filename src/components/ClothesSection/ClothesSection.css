@@ -13,6 +13,11 @@
   margin: 0 0 16px;
 }
 .clothes-section__add-clothes-btn {
+  background-color: transparent;
+  padding: 0;
+  border: none;
+  margin: 0 0 0 20px;
+  cursor: pointer;
   color: rgba(0, 0, 0, 0.6);
   transition: color 0.2s ease;
 }
@@ -20,7 +25,12 @@
   color: rgba(0, 0, 0, 1);
 }
 .clothes-section__card-list {
+  display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
 }
 
 @media screen and (max-width: 1024px) {

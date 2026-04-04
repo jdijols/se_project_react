@@ -2,14 +2,11 @@ import { useForm } from "../../hooks/useForm";
 import ModalWithForm from "./ModalWithForm";
 
 function AddItemModal({ isOpen, onClose, onOverlayClick, onAddItemSubmit }) {
-  const { values, handleChange, handleReset } = useForm({
+  const { values, errors, isValid, handleChange, handleReset } = useForm({
     name: "",
     imageUrl: "",
-    weather: "Hot",
+    weather: "hot",
   });
-
-  const isFormValid =
-    values.name.trim().length >= 2 && values.imageUrl.trim() !== "";
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -24,17 +21,20 @@ function AddItemModal({ isOpen, onClose, onOverlayClick, onAddItemSubmit }) {
       name="add-clothes-form"
       onClose={onClose}
       onOverlayClick={onOverlayClick}
-      isFormValid={isFormValid}
+      isFormValid={isValid}
       onSubmit={handleSubmit}
     >
       <fieldset className="modal__fieldset">
-        <label htmlFor="add-item-name-input" className="modal__label">
-          Name
+        <label
+          htmlFor="add-item-name-input"
+          className={`modal__label${errors.name ? " modal__label_error" : ""}`}
+        >
+          {errors.name ? `Name * (${errors.name})` : "Name *"}
           <input
             id="add-item-name-input"
             type="text"
             placeholder="Name"
-            className="modal__input"
+            className={`modal__input${errors.name ? " modal__input_error" : ""}`}
             name="name"
             value={values.name}
             onChange={handleChange}
@@ -43,13 +43,16 @@ function AddItemModal({ isOpen, onClose, onOverlayClick, onAddItemSubmit }) {
             maxLength={30}
           />
         </label>
-        <label htmlFor="add-item-image-input" className="modal__label">
-          Image
+        <label
+          htmlFor="add-item-image-input"
+          className={`modal__label${errors.imageUrl ? " modal__label_error" : ""}`}
+        >
+          {errors.imageUrl ? `Image * (${errors.imageUrl})` : "Image *"}
           <input
             id="add-item-image-input"
             type="url"
             placeholder="Image URL"
-            className="modal__input"
+            className={`modal__input${errors.imageUrl ? " modal__input_error" : ""}`}
             name="imageUrl"
             value={values.imageUrl}
             onChange={handleChange}
@@ -63,37 +66,37 @@ function AddItemModal({ isOpen, onClose, onOverlayClick, onAddItemSubmit }) {
         <div className="modal__radio-btn">
           <input
             type="radio"
-            id="Hot"
+            id="hot"
             name="weather"
-            value="Hot"
-            checked={values.weather === "Hot"}
+            value="hot"
+            checked={values.weather === "hot"}
             onChange={handleChange}
           />
-          <label htmlFor="Hot">Hot</label>
+          <label htmlFor="hot">Hot</label>
         </div>
 
         <div className="modal__radio-btn">
           <input
             type="radio"
-            id="Warm"
+            id="warm"
             name="weather"
-            value="Warm"
-            checked={values.weather === "Warm"}
+            value="warm"
+            checked={values.weather === "warm"}
             onChange={handleChange}
           />
-          <label htmlFor="Warm">Warm</label>
+          <label htmlFor="warm">Warm</label>
         </div>
 
         <div className="modal__radio-btn">
           <input
             type="radio"
-            id="Cold"
+            id="cold"
             name="weather"
-            value="Cold"
-            checked={values.weather === "Cold"}
+            value="cold"
+            checked={values.weather === "cold"}
             onChange={handleChange}
           />
-          <label htmlFor="Cold">Cold</label>
+          <label htmlFor="cold">Cold</label>
         </div>
       </fieldset>
     </ModalWithForm>

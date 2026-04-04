@@ -23,6 +23,22 @@
   margin: 0;
   top: 16px;
 }
+.card__like-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 24px;
+  height: 24px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+.card__like-icon {
+  width: 20px;
+  height: 18px;
+}
 .card__image {
   width: 100%;
   object-fit: cover;
