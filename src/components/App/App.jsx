@@ -39,6 +39,7 @@ function App() {
 
   const [currentUser, setCurrentUser] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
   const [loginError, setLoginError] = useState(false);
 
   const headerRef = useRef(null);
@@ -196,7 +197,10 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");
-    if (!token) return;
+    if (!token) {
+      setIsAuthLoading(false);
+      return;
+    }
 
     getUserMe(token)
       .then((user) => {
@@ -206,6 +210,9 @@ function App() {
       .catch((err) => {
         console.error(err);
         localStorage.removeItem("jwt");
+      })
+      .finally(() => {
+        setIsAuthLoading(false);
       });
   }, []);
 
@@ -240,7 +247,7 @@ function App() {
               <Route
                 path="/profile"
                 element={
-                  <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <ProtectedRoute isLoggedIn={isLoggedIn} isLoading={isAuthLoading}>
                     <Profile
                       clothingItems={clothingItems}
                       onCardClick={handleOpenItemModal}
