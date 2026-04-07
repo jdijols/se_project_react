@@ -4,6 +4,11 @@ export const coordinates = {
 };
 export const apiKey = "c7a5256f184291bbfa7f5308f1d07787";
 
+export const BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://api.wtwr.thedesktop.com"
+    : "http://localhost:3001";
+
 export const weatherConditionImages = {
   day: {
     clear: {
