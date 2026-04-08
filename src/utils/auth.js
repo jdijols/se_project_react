@@ -1,8 +1,5 @@
 import { BASE_URL } from "./constants";
-
-function handleResponse(res) {
-  return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
-}
+import { handleResponse } from "./api";
 
 function signup({ name, avatar, email, password }) {
   return fetch(`${BASE_URL}/signup`, {

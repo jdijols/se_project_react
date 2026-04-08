@@ -47,6 +47,7 @@ function removeCardLike(id, token) {
 }
 
 export {
+  handleResponse,
   getClothingItems,
   addClothingItem,
   deleteClothingItem,
